@@ -17,21 +17,23 @@ export class MessagesComponent implements OnInit {
   pagination: Pagination;
   messageContainer = 'Unread';
 
-  constructor(private userService: UserService, private authService: AuthService,private route: ActivatedRoute, private alertify: AlertifyService) { }
+  constructor(private userService: UserService, private authService: AuthService,
+                private route: ActivatedRoute, private alertify: AlertifyService) { }
 
   ngOnInit() {
-    this.route.data.subscribe(data=>{
+    this.route.data.subscribe(data => {
       this.messages = data['message'].result;
       this.pagination = data['message'].pagination;
     });
   }
 
   loadMessages() {
-    this.userService.getMessages(this.authService.decodedToken.nameid, this.pagination.currentPage, this.pagination.itemsPerPage, this.messageContainer)
-      .subscribe((res: PaginatedResult<Message[]>)=>{
+    this.userService.getMessages(this.authService.decodedToken.nameid, this.pagination.currentPage,
+                                    this.pagination.itemsPerPage, this.messageContainer)
+      .subscribe((res: PaginatedResult<Message[]>) => {
         this.messages = res.result;
         this.pagination = res.pagination;
-      },error=>{
+      }, error => {
         this.alertify.error(error);
       });
   }

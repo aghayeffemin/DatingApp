@@ -3,7 +3,7 @@ export interface Message {
     senderId: number;
     senderKnownAs: string;
     senderPhotoUrl: string;
-    recitpientId: number;
+    recipientId: number;
     recipientKnownAs: string;
     recipientPhotoUrl: string;
     content: string;

@@ -33,11 +33,11 @@ export class UserService {
       params = params.append('orderBy', userParams.gender);
     }
 
-    if(likesParam === 'Likers') {
+    if (likesParam === 'Likers') {
       params = params.append('likers', 'true');
     }
 
-    if(likesParam === 'Likees') {
+    if (likesParam === 'Likees') {
       params = params.append('likees', 'true');
     }
 
@@ -88,13 +88,17 @@ export class UserService {
 
     return this.http.get<Message[]>(this.baseUrl + 'users/' + id + '/messages', {observe: 'response', params})
       .pipe(
-        map(response=>{
+        map(response => {
           paginatedResult.result = response.body;
-          if(response.headers.get('Pagination') != null) {
+          if (response.headers.get('Pagination') != null) {
             paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
           }
           return paginatedResult;
         })
-      )
+      );
+  }
+
+  getMessageThread(id: number, recipientId: number) {
+    return this.http.get<Message[]>(this.baseUrl + 'users/' + id + '/messages/thread/' + recipientId);
   }
 }
